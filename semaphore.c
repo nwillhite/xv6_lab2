@@ -5,6 +5,7 @@
 #include "semaphore.h"
 #include "queue.h"
 
+//comment``
 void
 sem_init(struct Semaphore *s, int val)
 {
