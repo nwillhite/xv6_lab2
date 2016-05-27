@@ -1,13 +1,14 @@
 #ifndef __SEM_H
 #define __SEM_H
 
-//#include "param.h"
-#include "queue.h"
+#include "param.h"
 #include "spinlock.h"
 
 typedef struct Semaphore{
     int value;
-    struct queue *q;
+    int q[NPROC];
+    int q_front;
+    int q_back;
     //lock_t lock;
     struct spinlock lock;
 }Semaphore;

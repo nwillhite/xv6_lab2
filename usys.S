@@ -33,4 +33,6 @@ SYSCALL(clone)
 SYSCALL(texit)
 SYSCALL(tsleep)
 SYSCALL(twakeup)
-
+SYSCALL(sem_init)
+SYSCALL(sem_acquire)
+SYSCALL(sem_signal)

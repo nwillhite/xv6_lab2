@@ -1,10 +1,12 @@
 #include "types.h"
 #include "stat.h"
-#include "user.h"
-//#include "defs.h"
+#include "param.h"
+#include "defs.h"
 #include "semaphore.h"
+#include "mmu.h"
 #include "queue.h"
-
+#include "x86.h"
+#include "proc.h"
 //comment``
 void
 sem_init(struct Semaphore *s, int val)
@@ -12,9 +14,8 @@ sem_init(struct Semaphore *s, int val)
   s->value = val;
   //lock_init(&s->lock);
   initlock(&s->lock, (char*)s);
-  s->q = (struct queue*)malloc(sizeof(struct queue));
-  init_q(s->q);
-  printf(1, "queue done\n");
+  cprintf("queue done\n");
+  s->q_front = s->q_back = 0;
 }
 
 
@@ -33,8 +34,10 @@ sem_acquire(struct Semaphore *s)
     if (s->value < 0) 
     {
         int pid;
-        pid = getpid();
-        add_q(s->q, pid);
+        pid = proc->pid;
+        //add_q(s->q, pid);
+        s->q[s->q_back] = pid;
+        s->q_back = ((s->q_back + 1) % NPROC);
         //lock_release(&s->lock);
         release(&s->lock);
         tsleep();
@@ -62,7 +65,10 @@ sem_signal(struct Semaphore *s)
     //if waiting thread(s), wake one
     if (s->value < 0)
     {
-        twakeup(pop_q(s->q));
+        int pid;
+        pid = s->q[s->q_front];
+        s->q_front += ((s->q_front + 1) % NPROC);
+        twakeup(pid);
     }
     
     //relaese the lock

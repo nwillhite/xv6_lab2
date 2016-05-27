@@ -164,6 +164,11 @@ void            uartinit(void);
 void            uartintr(void);
 void            uartputc(int);
 
+//semaphore.c
+void            sem_init(struct Semaphore *, int);
+void            sem_acquire(struct Semaphore *);
+void            sem_signal(struct Semaphore *);
+
 // vm.c
 void            seginit(void);
 void            kvmalloc(void);

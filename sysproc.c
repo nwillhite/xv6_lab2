@@ -127,3 +127,38 @@ sys_twakeup(void)
         twakeup(tid);
         return 0;
 }
+
+int
+sys_sem_init(void)
+{
+    struct Semaphore *sem;
+    argptr(0,(char**) &sem, sizeof(Semaphore*));
+    int val;
+    if(argint(0, &val) < 0){
+        return -1;
+    }
+
+    sem_init(sem, val);
+    return 0;
+
+}
+
+int 
+sys_sem_acquire(void)
+{
+    struct Semaphore *sem;
+    argptr(0, (char**) &sem, sizeof(Semaphore*));
+
+    sem_acquire(sem);
+    return 0;
+}
+
+int
+sys_sem_signal(void)
+{
+    struct Semaphore *sem;
+    argptr(0, (char**) &sem, sizeof(Semaphore*));
+
+    sem_signal(sem);
+    return 0;
+}

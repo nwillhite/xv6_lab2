@@ -48,11 +48,11 @@ void lock_init(lock_t *lock);
 void lock_acquire(lock_t *lock);
 void lock_release(lock_t *lock);
 
-/*
+//semaphore
 void sem_init(struct Semaphore *, int);
 void sem_acquire(struct Semaphore *);
 void sem_signal(struct Semaphore *);
-*/
+
 
 //spinlock util
 void initlock(spinlock *lk, char *name);
