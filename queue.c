@@ -1,6 +1,6 @@
-#include "queue.h"
 #include "types.h"
 #include "user.h"
+#include "queue.h"
 
 void init_q(struct queue *q){
     q->size = 0;
@@ -9,7 +9,7 @@ void init_q(struct queue *q){
 }
 
 void add_q(struct queue *q, int v){
-    struct node * n = malloc(sizeof(struct node));
+    struct node *n = malloc(sizeof(struct node));
     n->next = 0;
     n->value = v;
     if(q->head == 0){

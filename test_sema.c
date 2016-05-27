@@ -1,5 +1,7 @@
 #include "types.h"
+#include "stat.h"
 #include "user.h"
+//#include "thread.c"
 #include "semaphore.h"
 
 struct thread{
@@ -19,7 +21,9 @@ void func(void *arg_ptr);
 
 int main(){
     struct thread *t;
+    printf(1, "initializing semaphore\n");
     sem_init(&sem, 1);
+    printf(1, "done initializing\n");
     int i;
     printf(1, "init ttable\n");
     lock_init(&ttable.lock);
@@ -37,8 +41,10 @@ int main(){
 
     i = 0;
 
-    while (&ttable.total > 0){
-        printf(1, "total threads: %d", &ttable.total);
+    while (ttable.total > 0){
+        printf(1, "total threads: %d", ttable.total);
+        texit();
+        ttable.total--;
     }
     exit();
 
@@ -53,9 +59,9 @@ void func(void *arg_ptr) {
     ttable.total++;
     lock_release(&ttable.lock);
 
-    printf(1, "Thread %d, getting semaphore.", tid);
+ //   printf(1, "Thread %d, getting semaphore.\n", tid);
     sem_acquire(&sem);
-    printf(1, "I, thread %d, have the semaphore!", tid);
+    printf(1, "%d has the semaphore!\n", tid);
     sem_signal(&sem);
     texit();
 }

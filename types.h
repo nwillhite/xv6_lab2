@@ -6,3 +6,4 @@ typedef struct {
           uint locked;
         } lock_t;
 typedef struct Semaphore Semaphore;
+typedef struct spinlock spinlock;
