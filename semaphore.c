@@ -1,59 +1,72 @@
-nclude "semaphore.h"
-#include "proc.h"
-#include "x86.h"
-#include "defs.h"
 #include "types.h"
-#include "memlayout.h"
+#include "stat.h"
 #include "user.h"
+//#include "defs.h"
+#include "semaphore.h"
+#include "queue.h"
 
+//comment``
 void
 sem_init(struct Semaphore *s, int val)
 {
-    &s->value = val;
-      initlock(&s->lock, (char*)s);
-        init_q(&s->q);
-
+  s->value = val;
+  //lock_init(&s->lock);
+  initlock(&s->lock, (char*)s);
+  s->q = (struct queue*)malloc(sizeof(struct queue));
+  init_q(s->q);
+  printf(1, "queue done\n");
 }
+
 
 //this should be entirely atomic
 void
-sem_acquire(Semaphore *s)
+sem_acquire(struct Semaphore *s)
 {
+    //get the lock
+    //lock_acquire(&s->lock);
+    acquire(&s->lock);
 
-  //get the lock
-  acquire(&s->lock);
+    //decrement sem value
+    s->value -= 1;
 
-  //decrement sem value
-  &s->value -= 1;
+    //if no resources, wait to be woken
+    if (s->value < 0) 
+    {
+        int pid;
+        pid = getpid();
+        add_q(s->q, pid);
+        //lock_release(&s->lock);
+        release(&s->lock);
+        tsleep();
+    } 
+    else 
+    {
+        //release lock
+        //lock_release(&s->lock);
+        release(&s->lock);
+    }
+} 
 
-  //if no resources, wait to be woken
-  if (&s->value < 0)
-  {
-    add_q(&s->lock);
-    release(&s->lock);
-    tsleep();
-  }
-
-  // release lock
-  release(&s->lock);
-}
 
 //this should be entirely atomic
-void sem_signal(Semaphore *s)
+void
+sem_signal(struct Semaphore *s)
 {
-  //get the lock
-  acquire(&s->lock);
+    //get the lock
+    //lock_acquire(&s->lock);
+    acquire(&s->lock);
 
-  //increment sem value
-  &s->value += 1;
-
-  //release the lock
-  release(&s->lock);
-
-  //if waiting threads(s), wake one
-  if (&s->value < 0)
-  {
-    twakeup(pop_q(&s->q));
-  }
-
+    //increment sem value
+    s->value += 1;
+ 
+    //if waiting thread(s), wake one
+    if (s->value < 0)
+    {
+        twakeup(pop_q(s->q));
+    }
+    
+    //relaese the lock
+    //lock_release(&s->lock); 
+    release(&s->lock);
 }
+ 

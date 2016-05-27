@@ -47,3 +47,14 @@ void *thread_create(void (*start_routine)(void*), void *arg);
 void lock_init(lock_t *lock);
 void lock_acquire(lock_t *lock);
 void lock_release(lock_t *lock);
+
+/*
+void sem_init(struct Semaphore *, int);
+void sem_acquire(struct Semaphore *);
+void sem_signal(struct Semaphore *);
+*/
+
+//spinlock util
+void initlock(spinlock *lk, char *name);
+void acquire(spinlock *lk);
+void release(spinlock *lk);
