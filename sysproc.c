@@ -127,3 +127,10 @@ sys_twakeup(void)
         twakeup(tid);
         return 0;
 }
+
+int  sys_yield(void)
+{
+  int i;
+  argint(0, &i);
+  return yield(i);
+}
