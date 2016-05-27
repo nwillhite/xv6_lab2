@@ -58,3 +58,8 @@ int random(int max){
     rands = rands * 1664525 + 1013904233;
     return (int)(rands % max);
 }
+
+int thread_yield(int tid)
+{
+  return yield(tid);
+}
