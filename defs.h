@@ -116,9 +116,8 @@ void            userinit(void);
 int             wait(void);
 void            wakeup(void*);
 void            twakeup(int);
-int             yield(void);
 void            tsleep(void);
-void            yield(void);
+int             yield(int);
 int             clone(int stack, int size,int routine,int arg);
 void            texit(void);
 

@@ -475,13 +475,15 @@ sched(void)
 }
 
 // Give up the CPU for one scheduling round.
-    void
-yield(void)
+int
+yield(int pid)
 {
     acquire(&ptable.lock);  //DOC: yieldlock
     proc->state = RUNNABLE;
     sched();
     release(&ptable.lock);
+
+    return 0;
 }
 
 // A fork child's very first scheduling by scheduler()
