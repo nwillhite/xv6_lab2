@@ -53,8 +53,8 @@ int main(){
 
 void func(void *arg_ptr) {
     int tid;
-    tid = getpid();
     lock_acquire(&ttable.lock);
+    tid = getpid();
     (ttable.threads[ttable.total]).tid = tid;
     ttable.total++;
     lock_release(&ttable.lock);
@@ -63,5 +63,7 @@ void func(void *arg_ptr) {
     sem_acquire(&sem);
     printf(1, "%d has the semaphore!\n", tid);
     sem_signal(&sem);
-    texit();
+    printf(1, "%d exiting\n", tid);
+    texit();\
+    ttable.total--;
 }

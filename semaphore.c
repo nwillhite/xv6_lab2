@@ -1,20 +1,20 @@
 #include "types.h"
-#include "stat.h"
 #include "param.h"
 #include "defs.h"
-#include "semaphore.h"
 #include "mmu.h"
-#include "queue.h"
 #include "x86.h"
 #include "proc.h"
+//#include "queue.h"
+#include "semaphore.h"
 //comment``
 void
 sem_init(struct Semaphore *s, int val)
 {
+  cprintf("initializing s->value = %d to %d\n", s->value, val);
   s->value = val;
   //lock_init(&s->lock);
+  cprintf("initializing lock\n");
   initlock(&s->lock, (char*)s);
-  cprintf("queue done\n");
   s->q_front = s->q_back = 0;
 }
 
