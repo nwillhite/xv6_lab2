@@ -26,7 +26,7 @@ int clone(int stack, int size,int routine, int arg);
 void texit(void) __attribute__((noreturn));
 void tsleep(void);
 void twakeup(int);
-int yield(int);
+void thread_yield(void);
 
 // ulib.c
 int stat(char*, struct stat*);

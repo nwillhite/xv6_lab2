@@ -59,7 +59,3 @@ int random(int max){
     return (int)(rands % max);
 }
 
-int thread_yield(int tid)
-{
-  return yield(tid);
-}

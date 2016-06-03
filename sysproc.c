@@ -128,9 +128,8 @@ sys_twakeup(void)
         return 0;
 }
 
-int  sys_yield(void)
+int sys_thread_yield(void)
 {
-  int i;
-  argint(0, &i);
-  return yield(i);
+  thread_yield();
+  return 0;
 }

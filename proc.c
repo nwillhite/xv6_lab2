@@ -474,16 +474,21 @@ sched(void)
     cpu->intena = intena;
 }
 
-// Give up the CPU for one scheduling round.
-int
-yield(int pid)
+// Give up the CPU for one scheduling round.t
+void yield(void)
 {
-    acquire(&ptable.lock);  //DOC: yieldlock
-    proc->state = RUNNABLE;
-    sched();
-    release(&ptable.lock);
+  acquire(&ptable.lock);  //DOC: yieldlock
+  proc->state = RUNNABLE;
+  sched();
+  release(&ptable.lock);
+}
 
-    return 0;
+void thread_yield(void)
+{
+  acquire(&ptable.lock);  //DOC: yieldlock
+  proc->state = RUNNABLE;
+  sched();
+  release(&ptable.lock);
 }
 
 // A fork child's very first scheduling by scheduler()
