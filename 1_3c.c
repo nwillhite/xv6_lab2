@@ -32,8 +32,8 @@ int main() {
     int *tid;
 
     printf(1, "Testing with %d randomly generated canibals and missionaries\n", TEST_NUM);
-    for (i = 0; i < TEST_NUM; i++) {
-        if ((random(99999)/101)%2) {
+    for (i = 1; i < TEST_NUM+1; i++) {
+        if ((random(99999*i)/101)%2) {
             tid = thread_create(CannibalArrives, (void*)0);
             if (tid == 0) {
                 printf(1, "failed to create thread!\n");
