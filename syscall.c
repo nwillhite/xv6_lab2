@@ -102,9 +102,6 @@ extern int sys_clone(void);
 extern int sys_texit(void);
 extern int sys_tsleep(void);
 extern int sys_twakeup(void);
-extern int sys_sem_init(void);
-extern int sys_sem_acquire(void);
-extern int sys_sem_signal(void);
 
 static int (*syscalls[])(void) = {
 [SYS_fork]    sys_fork,
@@ -132,9 +129,6 @@ static int (*syscalls[])(void) = {
 [SYS_texit]   sys_texit,
 [SYS_tsleep]   sys_tsleep,
 [SYS_twakeup]   sys_twakeup,
-[SYS_sem_init]   sys_sem_init,
-[SYS_sem_acquire] sys_sem_acquire,
-[SYS_sem_signal] sys_sem_signal,
 };
 
 void

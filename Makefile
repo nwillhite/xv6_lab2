@@ -15,7 +15,6 @@ OBJS = \
 	picirq.o\
 	pipe.o\
 	proc.o\
-	semaphore.o\
 	spinlock.o\
 	string.o\
 	swtch.o\
@@ -133,7 +132,7 @@ tags: $(OBJS) entryother.S _init
 vectors.S: vectors.pl
 	perl vectors.pl > vectors.S
 
-ULIB = ulib.o usys.o printf.o umalloc.o thread.o queue.o
+ULIB = ulib.o usys.o printf.o umalloc.o thread.o queue.o semaphore.o
 
 _%: %.o $(ULIB)
 	$(LD) $(LDFLAGS) -N -e main -Ttext 0x1000 -o $@ $^
@@ -181,8 +180,7 @@ UPROGS=\
 	_test_sema\
 	_sema1\
 	_1_3a\
-	_1_3aa\
-	_1_3b\
+	_1_3c\
 
 fs.img: mkfs README $(UPROGS)
 	./mkfs fs.img README $(UPROGS)
@@ -252,8 +250,8 @@ qemu-nox-gdb: fs.img xv6.img .gdbinit
 EXTRA=\
 	mkfs.c ulib.c user.h cat.c echo.c forktest.c grep.c kill.c\
 	ln.c ls.c mkdir.c rm.c stressfs.c usertests.c wc.c zombie.c\
-	printf.c umalloc.c test1.c test.c test_sleep.c frisbee.c 1_3b.c\
-	test_q.c test_null.c test_random.c test_sema.c sema1.c 1_3a.c 1_3aa.c\
+	printf.c umalloc.c test1.c test.c test_sleep.c frisbee.c 1_3c.c\
+	test_q.c test_null.c test_random.c test_sema.c sema1.c 1_3a.c\
 	README dot-bochsrc *.pl toc.* runoff runoff1 runoff.list\
 	.gdbinit.tmpl gdbutil\
 

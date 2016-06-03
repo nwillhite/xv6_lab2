@@ -1,17 +1,15 @@
-#ifndef __SEM_H
-#define __SEM_H
+#include "types.h"
+#include "queue.h"
 
-#include "param.h"
-#include "spinlock.h"
-
-typedef struct Semaphore{
-    signed int value, wakeups;
-    int q[NPROC];
-    int q_front;
-    int q_back;
-    //lock_t lock;
-    struct spinlock lock;
-}Semaphore;
+struct Semaphore{
+//    int value, wakeups;
+//    int q[NPROC];
+//    int q_front;
+//    int q_back;
+    lock_t lock;
+    int value;
+    struct queue q;
+};
 
 void sem_init(struct Semaphore*, int);
 void sem_acquire(struct Semaphore*);
@@ -83,4 +81,3 @@ sem_signal(Semaphore *s)
     release(&s.lock);
 }
  */       
-#endif // __SEM_H

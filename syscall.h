@@ -24,6 +24,3 @@
 #define SYS_texit  23
 #define SYS_tsleep 24
 #define SYS_twakeup 25
-#define SYS_sem_init 26
-#define SYS_sem_acquire 27
-#define SYS_sem_signal 28
