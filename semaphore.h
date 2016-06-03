@@ -5,7 +5,7 @@
 #include "spinlock.h"
 
 typedef struct Semaphore{
-    int value;
+    signed int value, wakeups;
     int q[NPROC];
     int q_front;
     int q_back;

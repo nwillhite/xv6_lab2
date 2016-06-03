@@ -17,12 +17,16 @@ void hReady(void * arg) {
 
 void oReady(void * w) {
     int *water = (int*)w;
+    printf(1, "%d about to acquire two h's\n", getpid());
     sem_acquire(&h);
     sem_acquire(&h);
+    printf(1, "%d about to signal an o\n", getpid());
     sem_signal(&o);
-    sem_signal(&o);
+    printf(1, "%d about to get mutex\n", getpid());
     sem_acquire(&mutex);
+    printf(1, "about to increment water\n");
     (*water)++;
+    printf(1, "%d about to signal mutext\n", getpid());
     sem_signal(&mutex);
 }
 
@@ -40,11 +44,11 @@ int main(int argc, char * argv[]) {
     sem_init(&mutex, 1);
     printf(1, "mutex has finished\n");
         
-    for(i = 0; i < 12; i++){
+    for(i = 0; i < 6; i++){
         printf(1, "hydrogen %d initializing\n", i);
         thread_create(hReady, 0);
     }
-    for(i = 0; i < 6; i++){
+    for(i = 0; i < 3; i++){
         printf(1, "oxygen %d initializing\n", i);
         thread_create(oReady, &water);
     }

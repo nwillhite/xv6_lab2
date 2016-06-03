@@ -134,10 +134,9 @@ sys_sem_init(void)
     struct Semaphore *sem;
     argptr(0,(char**) &sem, sizeof(Semaphore*));
     int val;
-    if(argint(0, &val) < 0){
+    if(argint(1, &val) < 0){
         return -1;
     }
-
     sem_init(sem, val);
     return 0;
 
